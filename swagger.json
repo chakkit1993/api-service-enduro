@@ -1,0 +1,422 @@
+{
+   "openapi": "3.0.0",
+    "info": {
+      "version": "1.0.0", 
+      "title": "Hello Cloud Run CRUD",
+      "description": "My User Project Application API",
+      "contact":{
+            "name": "OpenWeatherMap API",
+            "url": "https://openweathermap.org/api",
+            "email": "some_email@gmail.com"
+          },
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+
+    },
+    "host": "localhost:5000",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Users",
+        "description": "API for users in the system"
+      }
+    ],
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "servers": [
+      {
+        "url":  "localhost:3001",
+        "description": "Development server"
+      },
+      {
+        "url": "http://127.0.0.1:3001/",
+        "description": "Staging server"
+      },
+      {
+        "url": "http://127.0.0.1:3001/",
+        "description": "Production server"
+      }
+    ],
+    "paths": {
+     
+        "/addUser": {
+          "post": {
+            "tags": [
+              "Users"
+            ],
+            "description": "Create new user in system",
+            "parameters": [
+              {
+                "name": "user",
+                "in": "body",
+                "description": "User that we want to create",
+                "schema": {
+                  "$ref": "#/definitions/User"
+                }
+              }
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                "description": "New user is created",
+                "schema": {
+                  "$ref": "#/definitions/User"
+                }
+              }
+            }
+          } 
+        },
+        "/users": {
+          "get": {
+              "tags": [
+                "Users"
+              ],
+              "summary": "Get all users in system",
+              "responses": {
+                "200": {
+                  "description": "OK",
+                  "schema": {
+                    "$ref": "#/definitions/User"
+                  }
+                }
+              }
+            }
+        },
+        "/user/{id}": {
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID of user that we want to find",
+              "type": "integer"
+            }
+          ],
+          "delete": {
+            "summary": "Delete user with given ID",
+            "tags": [
+              "Users"
+            ],
+            "responses": {
+              "200": {
+                "description": "User is deleted",
+                "schema": {
+                  "$ref": "#/definitions/User"
+                }
+              }
+            }
+          },
+          "put": {
+            "summary": "Update user with give ID",
+            "tags": [
+              "Users"
+            ],
+            "parameters": [
+              {
+                "name": "user",
+                "in": "body",
+                "description": "User with new values of properties",
+                "schema": {
+                  "$ref": "#/definitions/updateUser"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "User is updated",
+                "schema": {
+                  "$ref": "#/definitions/User"
+                }
+              }
+            }
+          }
+        } ,       
+        "/books": {
+            "get": {
+                "tags": [
+                  "Books"
+                ],
+                "summary": "Get all book in system",
+                "responses": {
+                  "200": {
+                    "description": "OK",
+                    "schema": {
+                      "$ref": "#/definitions/Book"
+                    },
+                    "headers": {
+                      "Access-Control-Allow-Origin": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+          },  
+          "/addBook": {
+            "post": {
+                "tags": [
+                  "Books"
+                ],
+                "summary": "Get all book in system",
+                "description": "Create new Book in system",
+                "parameters": [
+                  {
+                    "name": "user",
+                    "in": "body",
+                    "description": "Book that we want to create",
+                    "schema": {
+                      "$ref": "#/definitions/Book"
+                    }
+                  }
+                ],
+                "produces": [
+                  "application/json"
+                ],
+                "responses": {
+                  "201": {
+                    "description": "OK",
+                    "schema": {
+                      "$ref": "#/definitions/Book"
+                    },
+                    "headers": {
+                      "Access-Control-Allow-Origin": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+          }, 
+        "/addPlayer": {
+            "post": {
+              "tags": [
+                "Player"
+              ],
+              "description": "Create new player in system",
+              "parameters": [
+                {
+                  "name": "user",
+                  "in": "body",
+                  "description": "User that we want to create",
+                  "schema": {
+                    "$ref": "#/definitions/Player"
+                  }
+                }
+              ],
+              "produces": [
+                "application/json"
+              ],
+              "responses": {
+                "200": {
+                  "description": "New player is created",
+                  "schema": {
+                    "$ref": "#/definitions/Player"
+                  }
+                }
+              }
+            } 
+          },     
+        "/players": {
+            "get": {
+                "tags": [
+                  "Player"
+                ],
+                "summary": "Get all Players in system",
+                "responses": {
+                  "200": {
+                    "description": "OK",
+                    "schema": {
+                      "$ref": "#/definitions/Players"
+                    }
+                  }
+                }
+              }
+          },  
+        "/player/{id}": {
+            "parameters": [
+              {
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "description": "ID of user that we want to find",
+                "type": "integer"
+              }
+            ],
+            "delete": {
+              "summary": "Delete user with given ID",
+              "tags": [
+                "Player"
+              ],
+              "responses": {
+                "200": {
+                  "description": "User is deleted",
+                  "schema": {
+                    "$ref": "#/definitions/Player"
+                  }
+                }
+              }
+            },
+            "put": {
+              "summary": "Update user with give ID",
+              "tags": [
+                "Player"
+              ],
+              "parameters": [
+                {
+                  "name": "user",
+                  "in": "body",
+                  "description": "User with new values of properties",
+                  "schema": {
+                    "$ref": "#/definitions/Player"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "User is updated",
+                  "schema": {
+                    "$ref": "#/definitions/Player"
+                  }
+                }
+              }
+            }
+          } ,       
+        "/divisions": {
+            "get": {
+                "tags": [
+                  "Division"
+                ],
+                "summary": "Get all Division in system",
+                "responses": {
+                  "200": {
+                    "description": "OK",
+                    "schema": {
+                      "$ref": "#/definitions/Divisions"
+                    }
+                  }
+                }
+              }
+          },                
+        "/tournaments": {
+            "get": {
+                "tags": [
+                  "Tournament"
+                ],
+                "summary": "Get all Tournament in system",
+                "responses": {
+                  "200": {
+                    "description": "OK",
+                    "schema": {
+                      "$ref": "#/definitions/Tournament"
+                    }
+                  }
+                }
+              }
+          }
+      },
+     
+      "definitions": {
+       
+        "User": {
+          "required": [
+            "name",
+            "_id",
+            "companies"
+          ],
+          "properties": {
+            "_id": {
+              "type": "integer",
+              "uniqueItems": true
+            },
+            "isPublic": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": "string"
+            },
+            "books": {
+              "type": "array",
+              "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "amount": {
+                      "type": "number"
+                    }
+                  }
+              }
+                  
+            },
+            "companies": {
+              "type": "array",
+              "items": {
+                  "type": "string"      
+              }
+                  
+            }
+           
+          }
+        },
+        "Player": {
+          "required": [
+            "name",
+            "companies"
+          ],
+          "properties": {
+            "isPublic": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": "string"
+            },
+            "books": {
+              "type": "array",
+              "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "amount": {
+                      "type": "number"
+                    }
+                  }
+              }
+                  
+            },
+            "companies": {
+              "type": "array",
+              "items": {
+                  "type": "string"      
+              }
+                  
+            }
+           
+          }
+        },
+        "Division": {
+          "type": "array",
+          "$ref": "#/definitions/User"
+        },
+        "Book": {
+          "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+       
+      }
+  }
+ 
+  
