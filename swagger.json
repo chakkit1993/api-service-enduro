@@ -1,5 +1,5 @@
 {
-   "openapi": "3.0.0",
+   "openapi": "3.0.3",
     "info": {
       "version": "1.0.0", 
       "title": "Hello Cloud Run CRUD",
@@ -15,8 +15,8 @@
       }
 
     },
-    "host": "localhost:5000",
-    "basePath": "/",
+    "host": "localhost:3333",
+    "basePath": "/api/v1/",
     "tags": [
       {
         "name": "Users",
@@ -28,264 +28,227 @@
     "produces": ["application/json"],
     "servers": [
       {
-        "url":  "localhost:3001",
+        "url":  "http://localhost:3333/api/v1/",
         "description": "Development server"
       },
       {
-        "url": "http://127.0.0.1:3001/",
-        "description": "Staging server"
-      },
-      {
-        "url": "http://127.0.0.1:3001/",
+        "url": "https://api-service-enduro-ulrixj4liq-as.a.run.app/api/v1/",
         "description": "Production server"
       }
     ],
     "paths": {
-     
-        "/addUser": {
-          "post": {
-            "tags": [
-              "Users"
-            ],
-            "description": "Create new user in system",
-            "parameters": [
-              {
-                "name": "user",
-                "in": "body",
-                "description": "User that we want to create",
-                "schema": {
-                  "$ref": "#/definitions/User"
-                }
-              }
-            ],
-            "produces": [
-              "application/json"
-            ],
-            "responses": {
-              "200": {
-                "description": "New user is created",
-                "schema": {
-                  "$ref": "#/definitions/User"
-                }
+      "/todos": {
+        "get": {
+          "tags": [
+            "Todos"
+          ],
+          "description": "get Todos in system",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "get todos",
+              "schema": {
+                "$ref": "#/definitions/Todo"
               }
             }
-          } 
-        },
-        "/users": {
-          "get": {
-              "tags": [
-                "Users"
-              ],
-              "summary": "Get all users in system",
-              "responses": {
-                "200": {
-                  "description": "OK",
-                  "schema": {
-                    "$ref": "#/definitions/User"
-                  }
-                }
-              }
-            }
-        },
-        "/user/{id}": {
+          }
+        } 
+      },
+      "/todo/{id}": {
+        "get": {
+          "tags": [
+            "Todos"
+          ],
+          "description": "get Todos in system",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
           "parameters": [
             {
               "name": "id",
               "in": "path",
-              "required": true,
-              "description": "ID of user that we want to find",
-              "type": "integer"
+              "description": "ID of pet to return",
+              "required": true
             }
           ],
-          "delete": {
-            "summary": "Delete user with given ID",
-            "tags": [
-              "Users"
-            ],
-            "responses": {
-              "200": {
-                "description": "User is deleted",
+          "responses": {
+            "200": {
+              "description": "get todos",
+              "schema": {
+                "$ref": "#/definitions/Todo"
+              }
+            }
+          }
+        } ,
+        "put": {
+          "operationId": "updateTodo",
+          "produces": [
+            "application/json"
+          ],
+          "tags": [
+            "Todos"
+          ],
+          "description": "updated new Todo in system",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of pet to return",
+              "required": true
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "accept": "application/json",
+            "content": {
+              " application/json" : {
                 "schema": {
-                  "$ref": "#/definitions/User"
+                  "$ref": "#/definitions/Todo"
+                }
+              },
+              " application/xml" : {
+                "schema": {
+                  "$ref": "#/definitions/Todo"
                 }
               }
             }
           },
-          "put": {
-            "summary": "Update user with give ID",
-            "tags": [
-              "Users"
-            ],
-            "parameters": [
-              {
-                "name": "user",
-                "in": "body",
-                "description": "User with new values of properties",
-                "schema": {
-                  "$ref": "#/definitions/updateUser"
-                }
+          "responses": {
+            "200": {
+              "description": "todos successfully updated",
+              "schema": {
+                "$ref": "#/definitions/Todo"
               }
-            ],
-            "responses": {
-              "200": {
-                "description": "User is updated",
-                "schema": {
-                  "$ref": "#/definitions/User"
-                }
+            },
+            "400": {
+              "description": "bad request todos",
+              "schema": {
+                "$ref": "#/definitions/Todo"
               }
             }
           }
-        } ,       
-        "/books": {
-            "get": {
-                "tags": [
-                  "Books"
-                ],
-                "summary": "Get all book in system",
-                "responses": {
-                  "200": {
-                    "description": "OK",
-                    "schema": {
-                      "$ref": "#/definitions/Book"
-                    },
-                    "headers": {
-                      "Access-Control-Allow-Origin": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              }
-          },  
-          "/addBook": {
-            "post": {
-                "tags": [
-                  "Books"
-                ],
-                "summary": "Get all book in system",
-                "description": "Create new Book in system",
-                "parameters": [
-                  {
-                    "name": "user",
-                    "in": "body",
-                    "description": "Book that we want to create",
-                    "schema": {
-                      "$ref": "#/definitions/Book"
-                    }
-                  }
-                ],
-                "produces": [
-                  "application/json"
-                ],
-                "responses": {
-                  "201": {
-                    "description": "OK",
-                    "schema": {
-                      "$ref": "#/definitions/Book"
-                    },
-                    "headers": {
-                      "Access-Control-Allow-Origin": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              }
-          }, 
-        "/addPlayer": {
-            "post": {
-              "tags": [
-                "Player"
-              ],
-              "description": "Create new player in system",
-              "parameters": [
-                {
-                  "name": "user",
-                  "in": "body",
-                  "description": "User that we want to create",
-                  "schema": {
-                    "$ref": "#/definitions/Player"
-                  }
-                }
-              ],
-              "produces": [
-                "application/json"
-              ],
-              "responses": {
-                "200": {
-                  "description": "New player is created",
-                  "schema": {
-                    "$ref": "#/definitions/Player"
-                  }
-                }
-              }
-            } 
-          },     
-        "/players": {
-            "get": {
-                "tags": [
-                  "Player"
-                ],
-                "summary": "Get all Players in system",
-                "responses": {
-                  "200": {
-                    "description": "OK",
-                    "schema": {
-                      "$ref": "#/definitions/Players"
-                    }
-                  }
-                }
-              }
-          },  
-        "/player/{id}": {
-            "parameters": [
-              {
-                "name": "id",
-                "in": "path",
-                "required": true,
-                "description": "ID of user that we want to find",
-                "type": "integer"
-              }
-            ],
-            "delete": {
-              "summary": "Delete user with given ID",
-              "tags": [
-                "Player"
-              ],
-              "responses": {
-                "200": {
-                  "description": "User is deleted",
-                  "schema": {
-                    "$ref": "#/definitions/Player"
-                  }
-                }
+        },
+        "delete": {
+          "operationId": "deleteTodo",
+          "produces": [
+            "application/json"
+          ],
+          "tags": [
+            "Todos"
+          ],
+          "description": "delete new Todo in system",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of pet to return",
+              "required": true
+            }
+          ],
+          
+          "responses": {
+            "200": {
+              "description": "todos successfully deleted",
+              "schema": {
+                "$ref": "#/definitions/Todo"
               }
             },
-            "put": {
-              "summary": "Update user with give ID",
-              "tags": [
-                "Player"
-              ],
-              "parameters": [
-                {
-                  "name": "user",
-                  "in": "body",
-                  "description": "User with new values of properties",
-                  "schema": {
-                    "$ref": "#/definitions/Player"
-                  }
+            "400": {
+              "description": "bad request todos",
+              "schema": {
+                "$ref": "#/definitions/Todo"
+              }
+            }
+          }
+        }  
+      },
+      "/todo/findbystatus": {
+        "get": {
+          "tags": [
+            "Todos"
+          ],
+          "description": "get Todos in system",
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "status",
+              "in": "query",
+              "description":" Status values",
+          "required": false,
+          "explode": true,
+          "schema":{
+            "type": "boolean",
+            "default": true,
+            "enum":[ true , false]
+          }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "get todos",
+              "schema": {
+                "$ref": "#/definitions/Todo"
+              }
+            }
+          }
+        } 
+      },
+      "/todo": {
+        "post": {
+          "operationId": "addTodo",
+          "produces": [
+            "application/json"
+          ],
+          "tags": [
+            "Todos"
+          ],
+          "description": "create new Todo in system",
+          "requestBody": {
+            "required": true,
+            "accept": "application/json",
+            "content": {
+              " application/json" : {
+                "schema": {
+                  "$ref": "#/definitions/Todo"
                 }
-              ],
-              "responses": {
-                "200": {
-                  "description": "User is updated",
-                  "schema": {
-                    "$ref": "#/definitions/Player"
-                  }
+              },
+              " application/xml" : {
+                "schema": {
+                  "$ref": "#/definitions/Todo"
                 }
               }
             }
-          } ,       
+          },
+     
+          "responses": {
+            "200": {
+              "description": "todos successfully created",
+              "schema": {
+                "$ref": "#/definitions/Todo"
+              }
+            },
+            "400": {
+              "description": "bad request todos",
+              "schema": {
+                "$ref": "#/definitions/Todo"
+              }
+            }
+          }
+        } 
+      },
         "/divisions": {
             "get": {
                 "tags": [
@@ -405,14 +368,17 @@
           "type": "array",
           "$ref": "#/definitions/User"
         },
-        "Book": {
+        "Todo": {
+          "type": "object",
+          "required": ["text"],
           "properties": {
-          "id": {
-            "type": "number"
-          },
-          "name": {
-            "type": "string"
-          }
+            "text": {
+              "type": "string"
+            },
+            "completed": 
+            {
+              "type": "boolean"
+            }
         }
       }
        

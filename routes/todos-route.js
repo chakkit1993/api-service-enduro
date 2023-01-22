@@ -2,7 +2,7 @@
 const firebase = require('../database/db');
 const firestore = firebase.firestore();
 const express = require("express");
-const { getAllTodos, addTodo, updateTodo, deleteTodo, getTodo } = require('../controller/todos-controller');
+const { getAllTodos, addTodo, updateTodo, deleteTodo, getTodo ,addTodo2 } = require('../controller/todos-controller');
 const router = express.Router();
 
 
@@ -26,6 +26,7 @@ const router = express.Router();
 
 router.get('/todos', getAllTodos);
 router.post('/todo', addTodo);
+router.post('/todo2', addTodo2);
 router.get('/todo/:id', getTodo);
 router.put('/todo/:id', updateTodo);
 router.delete('/todo/:id', deleteTodo);
