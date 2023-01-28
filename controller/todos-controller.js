@@ -75,7 +75,7 @@ const addTodo2 = async (req, res, next) => {
 const getAllTodos = async (req, res, next) => {
     try {
         const docRef = await firestore.collection('todos');
-        const data = await docRef.limit(2).get();
+        const data = await docRef.get();
         const todos = [];
        
         if(data.empty) {
